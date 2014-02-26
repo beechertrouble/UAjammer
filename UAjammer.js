@@ -1,16 +1,17 @@
 /**
-* v.1.0
+* v.1.1
 */
-_UAjammer = new function(immediately) {
+var _UAjammer = new function(immediately) {
 	
 	var UA = this,
 		browsers = ["Firefox/", "Chrome/", "Safari/", "Opera/", "MSIE "],
 		mobileString, webkitString,
-		detectBrowser, detectMobile, detectOS, addHTMLClass, addClassTimer;
+		detectBrowser, detectMobile, detectOS, addHTMLClass, addClassTimer, osv;
 			
 	this.Raw = navigator.userAgent;
 	this.ClassString = "";
 	this.OS = 'other';
+	this.OSv = '';
 	this.Device = 'pc';
 	this.Venue = 'desktop';
 	this.Mobile = false;
@@ -38,6 +39,7 @@ _UAjammer = new function(immediately) {
 						+ " " + webkitString 
 						+ " " + mobileString 
 						+ " _ua_os_" + UA.OS
+						+ " _ua_os_" + UA.OS + "_" + UA.OSv
 						+ " _ua_pixels_" + UA.Pixels;	
 						
 		addHTMLClass();
@@ -60,8 +62,8 @@ _UAjammer = new function(immediately) {
 				v = v.replace(/[^0-9\.]/, "");
 				
 				UA.Browser.Name = b.substr(0, (b_len -1)).toLowerCase();
-				UA.Browser.Version = v.substr(0, (v.indexOf("."))) * 1;
-				UA.VersionFull = v;
+				UA.Browser.Version = parseInt(v);
+				UA.Browser.VersionFull = v;
 				break;
 			}
 			
@@ -84,7 +86,7 @@ _UAjammer = new function(immediately) {
 				UA.Mobile = true;
 				break;
 			
-			case((UA.Raw.match(/android/i) && UA.Raw.match(/android/i).length > 0 ) && (UA.Raw.match(/mobile/i) && UA.Raw.match(/mobile/i).length > 0)):
+			case((UA.Raw.match(/android/i) && UA.Raw.match(/android/i).length > 0) && (UA.Raw.match(/mobile/i) && UA.Raw.match(/mobile/i).length > 0)):
 				UA.Device = "android";
 				UA.Venue = "phone";
 				UA.Mobile = true;
@@ -107,11 +109,16 @@ _UAjammer = new function(immediately) {
 	};
 	//
 	detectOS = function() {
+		
+		var start, end;
 				
 		switch(true) {
 			
 			case(UA.Raw.match(/macintosh/i) && UA.Raw.match(/macintosh/i).length > 0):
-				UA.OS = "macintosh";
+				UA.OS = "OSX";
+				start = UA.Raw.indexOf("OS X") + 5;
+				end = UA.Raw.indexOf(" ", start) - start;
+				UA.OSv = UA.Raw.substr(start, end).replace(/[^0-9\.\_]/, "").replace(/\_/g, ".");
 				break;
 				
 			case(UA.Raw.match(/windows/i) && UA.Raw.match(/windows/i).length > 0):
@@ -120,6 +127,13 @@ _UAjammer = new function(immediately) {
 				
 			case(UA.Raw.match(/linux/i) && UA.Raw.match(/linux/i).length > 0):
 				UA.OS = "linux";
+				break;
+				
+			case(UA.Raw.match(/\sOS\s/) && UA.Raw.match(/\sOS\s/).length > 0):
+				UA.OS = "iOS";
+				start = UA.Raw.indexOf("OS") + 3;
+				end = UA.Raw.indexOf(" ", start) - start;
+				UA.OSv = UA.Raw.substr(start, end).replace(/\_/g, ".");
 				break;
 			
 		}

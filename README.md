@@ -11,7 +11,7 @@ User Agent based browser detection, os detection, also pixel density, etc
 
 TO DO
 ========
-- add detection for touch support
-- revisit version_full
 - revisit immediately
 - revisit namespacing
+- revisit os versions for windows and linux and android ?
+- android native browser detected as safari ...
