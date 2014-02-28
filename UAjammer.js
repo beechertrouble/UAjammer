@@ -1,48 +1,55 @@
 /**
-* v.1.1
+* UAjammer
+* v.2.0
 */
-var _UAjammer = new function(immediately) {
+var _UAjammer = (function(args){
 	
-	var UA = this,
+	var UA = {},
+		defs = args || {},
+		immediately = defs.immediately || true,
+		addClasses = defs.addClasses || true,
+		ns = defs.nameSpace || '_ua',
+		//
 		browsers = ["Firefox/", "Chrome/", "Safari/", "Opera/", "MSIE "],
-		mobileString, webkitString,
-		detectBrowser, detectMobile, detectOS, addHTMLClass, addClassTimer, osv;
+		detectBrowser, detectMobile, detectOS, addHTMLClass, addClassTimer;
 			
-	this.Raw = navigator.userAgent;
-	this.ClassString = "";
-	this.OS = 'other';
-	this.OSv = '';
-	this.Device = 'pc';
-	this.Venue = 'desktop';
-	this.Mobile = false;
-	this.Touch = !!('ontouchstart' in window) || !!('onmsgesturechange' in window);
-	this.Pixels = 1;
-	this.Browser = {
+	UA.Raw = navigator.userAgent;
+	UA.ClassString = "";
+	UA.OS = 'other';
+	UA.OSv = '';
+	UA.Device = 'pc';
+	UA.Venue = 'desktop'; // tablet, phone
+	UA.Mobile = false;
+	UA.Touch = !!('ontouchstart' in window) || !!('onmsgesturechange' in window);
+	UA.Pixels = window.devicePixelRatio && window.devicePixelRatio >= 2 ? 2 : 1;
+	UA.Browser = {
 			Name : '',
 			Version : '',
 			VersionFull : ''
 		};
+	UA.Classes = [];
 		
 	//
-	this.init = function() {
+	UA.init = function() {
 	
 		detectBrowser();
 		detectMobile();
 		detectOS();
-		UA.Pixels = window.devicePixelRatio && window.devicePixelRatio >= 2 ? 2 : 1;
-		mobileString = UA.Mobile ? '_ua_mobile' : '_ua_not-mobile';
-		webkitString = UA.Raw.match(/webkit/i) ? '_ua_webkit' : '';
-		UA.ClassString = '_ua_device_' + UA.Device
-						+ " _ua_venue_" + UA.Venue 
-						+ " _ua_browser_" + UA.Browser.Name 
-						+ " _ua_browser_" + UA.Browser.Name + "_" + UA.Browser.Version 
-						+ " " + webkitString 
-						+ " " + mobileString 
-						+ " _ua_os_" + UA.OS
-						+ " _ua_os_" + UA.OS + "_" + UA.OSv
-						+ " _ua_pixels_" + UA.Pixels;	
-						
-		addHTMLClass();
+		UA.Classes.push('device_' + UA.Device);
+		UA.Classes.push('venue_' + UA.Venue);
+		UA.Classes.push('browser_' + UA.Browser.Name);
+		UA.Classes.push('browser_' + UA.Browser.Name + '_' + UA.Browser.Version);
+		UA.Classes.push(UA.Mobile ? 'mobile' : 'not-mobile');
+		if(UA.Raw.match(/webkit/i))
+			UA.Classes.push('webkit');
+		UA.Classes.push('os_' + UA.OS);
+		UA.Classes.push('os_' + UA.OS + '_' + UA.OSv);
+		UA.Classes.push('pixels_' + UA.Pixels);
+			
+		UA.ClassString = ns + '_' + UA.Classes.join(' ' + ns + '_');
+		
+		if(addClasses)				
+			addHTMLClass();
 				
 	};
 	//
@@ -149,9 +156,9 @@ var _UAjammer = new function(immediately) {
 		}
 	};				
 	
-	if(immediately === undefined || immediately)
-		this.init();
+	if(immediately)
+		UA.init();
 	
-	return this;
+	return UA;
 	
-}();
+}(window._uajArgs));
