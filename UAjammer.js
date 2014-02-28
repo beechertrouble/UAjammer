@@ -6,8 +6,8 @@ var _UAjammer = (function(args){
 	
 	var UA = {},
 		defs = args || {},
-		immediately = defs.immediately || true,
-		addClasses = defs.addClasses || true,
+		immediately = defs.immediately === undefined ? true : defs.immediately,
+		addClasses = defs.addClasses === undefined ? true : defs.addClasses,
 		ns = defs.nameSpace || '_ua',
 		//
 		browsers = ["Firefox/", "Chrome/", "Safari/", "Opera/", "MSIE "],
@@ -155,7 +155,7 @@ var _UAjammer = (function(args){
 			addClassTimer = setTimeout(addHTMLClass, 10);
 		}
 	};				
-	
+		
 	if(immediately)
 		UA.init();
 	
