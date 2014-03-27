@@ -54,6 +54,8 @@ var _UAjammer = (function(args){
 	};
 	//
 	detectBrowser = function() {
+		
+		var foundB = false;
 				
 		for(var i=0; i<browsers.length; i++) {
 			
@@ -61,6 +63,7 @@ var _UAjammer = (function(args){
 			
 			if(UA.Raw.indexOf(b) != -1) {
 				
+				foundB = true;
 				b_len = b.length;
 				start = UA.Raw.indexOf('Version') != -1 ? UA.Raw.indexOf('Version') + 7 : UA.Raw.indexOf(b) + b_len; 
 				end = UA.Raw.length - start;
@@ -73,8 +76,14 @@ var _UAjammer = (function(args){
 				UA.Browser.VersionFull = v;
 				break;
 			}
-			
 		}
+		
+		if(!foundB && UA.Raw.indexOf("Trident/") != -1) {
+			UA.Browser.Name = 'msie';
+			UA.Browser.Version = 10;
+			UA.Browser.VersionFull = 10;
+		}
+		
 	};
 	//
 	detectMobile = function() {
