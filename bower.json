@@ -1,0 +1,17 @@
+{
+	"name": "UAjammer",
+	"version": "1.0.0",
+	"homepage": "https://github.com/beechertrouble/UAjammer",
+	"authors": [
+		"Beecher <beechertrouble@gmail.com>",
+	],
+	"ignore": [
+		"node_modules",
+		"Gruntfile.js",
+		"package.json",
+		".project"
+	],
+	"main": "UAjammer.min.js",
+	"license": "MIT",
+	"private": false
+}
