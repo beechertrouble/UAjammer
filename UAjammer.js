@@ -20,7 +20,7 @@
 			addClasses = defs.addClasses === undefined ? true : defs.addClasses,
 			ns = defs.nameSpace || '_ua',
 			//
-			browsers = ["Firefox/", "Chrome/", "Safari/", "Opera/", "MSIE "],
+			browsers = ["Edge/", "Firefox/", "Chrome/", "Safari/", "Opera/", "MSIE "],
 			detectBrowser, detectMobile, detectOS, addHTMLClass, addClassTimer;
 				
 		UA.Raw = navigator.userAgent;
