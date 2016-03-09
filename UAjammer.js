@@ -151,7 +151,7 @@
 					
 				case(UA.Raw.match(/windows/i) && UA.Raw.match(/windows/i).length > 0):
 					UA.OS = "windows";
-					start = UA.Raw.match(/windows/i) + 8;
+					start = UA.Raw.indexOf(UA.Raw.match(/windows/i)) + 8;
 					console.log('start : ', start);
 					end = UA.Raw.indexOf(";", start) - start;
 					console.log('end : ', end);
