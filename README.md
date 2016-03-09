@@ -10,8 +10,32 @@ User Agent based browser detection, os detection, also pixel density, etc
 
 ARGS
 -----------
-- optional
-- var _uajArgs = { immediately : false, nameSpace : '_whatever_', addClasses : false};
+you can add these optional your dom before adding the UAjammer
+```javascript 
+var _uajArgs = { 
+	immediately : false, // defaults to true
+	nameSpace : '_whatever_', // defaults to _ua_
+	addClasses : false // defaults to true
+};
+```
+
+METHODS
+-----------
+```javascript 
+// only necessary if you've set the 'immediately' to false
+_UAjammer.init(); 
+
+/**
+* isLt, isLte, isGt, isGte :
+* arg = integer or float
+* returns bool
+*/
+var test_version = 20; // or whatever integer or float
+_UAjammer.isLt(test_version);
+_UAjammer.isLte(test_version);
+_UAjammer.isGt(test_version);
+_UAjammer.isGte(test_version);
+```
 
 TO DO
 -----------

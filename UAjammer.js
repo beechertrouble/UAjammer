@@ -1,7 +1,3 @@
-/**
-* UAjammer
-* v.2.0
-*/
 ;(function(W) {
 
 	'use strict';
@@ -38,6 +34,10 @@
 				VersionFull : ''
 			};
 		UA.Classes = [];
+		UA.isLt = function(v) { return UA.Browser.VersionFull < v; };
+		UA.isLte = function(v) { return UA.Browser.VersionFull <= v; };
+		UA.isGt = function(v) { return UA.Browser.VersionFull > v; };
+		UA.isGte = function(v) { return UA.Browser.VersionFull >= v; };
 			
 		//
 		UA.init = function() {
@@ -45,11 +45,12 @@
 			detectBrowser();
 			detectMobile();
 			detectOS();
+			
 			UA.Classes.push('device_' + UA.Device);
 			UA.Classes.push('venue_' + UA.Venue);
 			UA.Classes.push('browser_' + UA.Browser.Name);
 			UA.Classes.push('browser_' + UA.Browser.Name + '_' + UA.Browser.Version);
-			UA.Classes.push(UA.Mobile ? 'mobile' : 'not-mobile');
+			UA.Classes.push(UA.Mobile ? 'mobile' : 'not_mobile');
 			if(UA.Raw.match(/webkit/i))
 				UA.Classes.push('webkit');
 			UA.Classes.push('os_' + UA.OS);
@@ -83,7 +84,8 @@
 					
 					UA.Browser.Name = b.substr(0, (b_len -1)).toLowerCase();
 					UA.Browser.Version = parseInt(v);
-					UA.Browser.VersionFull = v;
+					UA.Browser.VersionFull = parseFloat(v);
+					
 					break;
 				}
 			}

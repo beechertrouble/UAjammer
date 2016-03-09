@@ -3,13 +3,14 @@
 	"version": "1.0.1",
 	"homepage": "https://github.com/beechertrouble/UAjammer",
 	"authors": [
-		"Beecher <beechertrouble@gmail.com>",
+		"Beecher <beechertrouble@gmail.com>"
 	],
 	"ignore": [
 		"node_modules",
 		"Gruntfile.js",
 		"package.json",
-		".project"
+		".project",
+		".git"
 	],
 	"main": "UAjammer.min.js",
 	"license": "MIT",
