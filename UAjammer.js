@@ -34,10 +34,10 @@
 				VersionFull : ''
 			};
 		UA.Classes = [];
-		UA.isLt = function(v) { return UA.Browser.VersionFull < v; };
-		UA.isLte = function(v) { return UA.Browser.VersionFull <= v; };
-		UA.isGt = function(v) { return UA.Browser.VersionFull > v; };
-		UA.isGte = function(v) { return UA.Browser.VersionFull >= v; };
+		UA.isLt = function(v) { return v.toString().indexOf('.') > 0 ? UA.Browser.VersionFull < v : UA.Browser.Version < v; };
+		UA.isLte = function(v) { return v.toString().indexOf('.') > 0 ? UA.Browser.VersionFull <= v : UA.Browser.Version <= v; };
+		UA.isGt = function(v) { return v.toString().indexOf('.') > 0 ? UA.Browser.VersionFull > v : UA.Browser.Version > v; };
+		UA.isGte = function(v) { return v.toString().indexOf('.') > 0 ? UA.Browser.VersionFull >= v : UA.Browser.Version >= v; };
 			
 		//
 		UA.init = function() {
