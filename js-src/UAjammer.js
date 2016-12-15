@@ -17,7 +17,7 @@
 			addClasses = defs.addClasses === undefined ? true : defs.addClasses,
 			ns = defs.nameSpace || '_ua',
 			//
-			browsers = ["Edge/", "Firefox/", "Chrome/", "android", "Safari/", "Opera/", "MSIE "],
+			browsers = ["Edge/", "Firefox/", "Chrome/", "Android ", "Safari/", "Opera/", "MSIE "],
 			detectBrowser, detectMobile, detectOS, addHTMLClass, addClassTimer;
 				
 		UA.Raw = navigator.userAgent;
@@ -167,12 +167,12 @@
 					UA.OSv = UA.Raw.substr(start, end).replace(/\_/g, ".");
 					break;
 					
+				case((UA.Raw.match(/linux/i) && UA.Raw.match(/linux/i).length > 0) && (UA.Raw.match(/Android/i) && UA.Raw.match(/Android/i).length > 0)):
+					UA.OS = "android";
+					break;
+					
 				case(UA.Raw.match(/linux/i) && UA.Raw.match(/linux/i).length > 0):
 					UA.OS = "linux";
-					break;
-				
-				case(UA.Raw.match(/android/i) && UA.Raw.match(/android/i).length > 0):
-					UA.OS = "android";
 					break;
 					
 				case(UA.Raw.match(/\sOS\s/) && UA.Raw.match(/\sOS\s/).length > 0):
