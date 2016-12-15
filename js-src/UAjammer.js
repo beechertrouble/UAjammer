@@ -1,22 +1,23 @@
-;(function(W) {
+;(function() {
 
 	'use strict';
 
 	/**
 	 * for AMD, don't redefine this!  (need to maintain globals and plugins)
 	 */
-	if (W._UAjammer)
+	if (window._UAjammer)
 		return;
 		
 	var _UAjammer = (function(){
 	
 		var UA = {},
+			W = window,
 			defs = W._uajArgs === undefined ? {} : W._uajArgs,
 			immediately = defs.immediately === undefined ? true : defs.immediately,
 			addClasses = defs.addClasses === undefined ? true : defs.addClasses,
 			ns = defs.nameSpace || '_ua',
 			//
-			browsers = ["Edge/", "Firefox/", "Chrome/", "Safari/", "Opera/", "MSIE "],
+			browsers = ["Edge/", "Firefox/", "Chrome/", "android", "Safari/", "Opera/", "MSIE "],
 			detectBrowser, detectMobile, detectOS, addHTMLClass, addClassTimer;
 				
 		UA.Raw = navigator.userAgent;
@@ -29,10 +30,10 @@
 		UA.Touch = !!('ontouchstart' in W) || !!('onmsgesturechange' in W);
 		UA.Pixels = W.devicePixelRatio && W.devicePixelRatio >= 2 ? 2 : 1;
 		UA.Browser = {
-				Name : '',
-				Version : '',
-				VersionFull : ''
-			};
+			Name : '',
+			Version : '',
+			VersionFull : ''
+		};
 		UA.Classes = [];
 		UA.isLt = function(v) { return v.toString().indexOf('.') > 0 ? UA.Browser.VersionFull < v : UA.Browser.Version < v; };
 		UA.isLte = function(v) { return v.toString().indexOf('.') > 0 ? UA.Browser.VersionFull <= v : UA.Browser.Version <= v; };
@@ -90,10 +91,20 @@
 				}
 			}
 			
-			if(!foundB && UA.Raw.indexOf("Trident/") != -1) {
+			if(!(window.ActiveXObject) && "ActiveXObject" in window) {
+				
+				UA.Browser.Name = 'msie';
+				UA.Browser.Version = 11;
+				UA.Browser.VersionFull = 11;
+				foundB = true;
+				
+			} else if(!foundB && UA.Raw.indexOf("Trident/") != -1) {
+				
 				UA.Browser.Name = 'msie';
 				UA.Browser.Version = 10;
 				UA.Browser.VersionFull = 10;
+				foundB = true;
+				
 			}
 			
 		};
@@ -159,6 +170,10 @@
 				case(UA.Raw.match(/linux/i) && UA.Raw.match(/linux/i).length > 0):
 					UA.OS = "linux";
 					break;
+				
+				case(UA.Raw.match(/android/i) && UA.Raw.match(/android/i).length > 0):
+					UA.OS = "android";
+					break;
 					
 				case(UA.Raw.match(/\sOS\s/) && UA.Raw.match(/\sOS\s/).length > 0):
 					UA.OS = "iOS";
@@ -176,7 +191,7 @@
 				clearTimeout(addClassTimer);
 				document.documentElement.className += " " + UA.ClassString;
 			} else { 
-				addClassTimer = setTimeout(addHTMLClass, 10);
+				addClassTimer = setTimeout(addHTMLClass, 60);
 			}
 		};				
 			
@@ -187,16 +202,13 @@
 		
 	}());
 	
+	window._UAjammer = _UAjammer;
+	
 	/**
-	 * Apply the ikelos function to the supplied scope (window)
+	 * Expose fingaFingaz as an AMD
 	 */
-	W._UAjammer = _UAjammer;
+	if (typeof define === "function") {
+		define("_UAjammer", [], function () { return _UAjammer; } );
+	} 
 
-})(window);
-
-/**
- * Expose fingaFingaz as an AMD
- */
-if (typeof define === "function") {
-	define("_UAjammer", [], function () { return _UAjammer; } );
-}
+})();

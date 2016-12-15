@@ -7,10 +7,14 @@
 	],
 	"ignore": [
 		"node_modules",
+		"npm-debug.js",
 		"Gruntfile.js",
 		"package.json",
 		".project",
-		".git"
+		".git",
+		".gitignore",
+		"demo",
+		"js-src"	
 	],
 	"main": "UAjammer.min.js",
 	"license": "MIT",

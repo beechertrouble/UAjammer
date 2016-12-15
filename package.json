@@ -1,0 +1,13 @@
+{
+  "name": "UAjammer",
+  "version": "2.0.0",
+  "repository": "https://github.com/beechertrouble/UAjammer",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt-cli": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest"
+  }
+}
